@@ -1,7 +1,11 @@
 using HelpDeskSystem.Data;
 using HelpDeskSystem.Entities;
+using HelpDeskSystem.Interfaces;
+using HelpDeskSystem.Mapping;
+using HelpDeskSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +27,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 //Add MVC
 builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+//builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddScoped<ITicketRepository, TicketRepository>(); //DI
 
 var app = builder.Build();
 
